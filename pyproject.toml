@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "hetzner-control"
+version = "0.1.0"
+description = "CLI application for managing servers on the Hetzner platform"
+authors = ["Hanabira <workflow.elec@gmail.com>"]
+license = "MIT License"
+
+[tool.poetry.dependencies]
+python = "3.8.10"
+requests = "^2.27.1"
+
+[tool.poetry.scripts]
+htz = "hetzner_control.cli:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
