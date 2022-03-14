@@ -1,5 +1,5 @@
 import typer
-from hetzner_control.constants import __app_name__, __version__
+from hetzner_control import __app_name__, __version__
 
 app = typer.Typer()
 
