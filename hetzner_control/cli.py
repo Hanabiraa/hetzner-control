@@ -1,7 +1,9 @@
 import typer
+import hetzner_control.commands.server as server
 from hetzner_control import __app_name__, __version__
 
 app = typer.Typer()
+app.add_typer(server.app, name="server")
 
 
 @app.command("version")
@@ -20,7 +22,7 @@ def callback():
     To use this application, you need an API token, so
     add the given environment variable to your terminal config file
 
-    $HETZNER_API_KEY = your_api_key
+    $HETZNER_API_TOKEN = your_api_key
     """
 
 
