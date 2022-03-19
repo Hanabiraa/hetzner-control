@@ -39,16 +39,69 @@ def get_servers() -> None:
 
     for server in data['servers']:
         table.add_row(
-            str(server['id']),
-            server['status'],
-            server['name'],
-            server['server_type']['description'],
-            str(server['server_type']['cores']),
-            str(server['server_type']['memory']),
-            str(server['server_type']['disk']),
-            server['server_type']['prices'][0]['price_monthly']['gross'][:6],
+            f"{server['id']}",
+            f"{server['status']}",
+            f"{server['name']}",
+            f"{server['server_type']['description']}",
+            f"{server['server_type']['cores']}",
+            f"{server['server_type']['memory']}",
+            f"{server['server_type']['disk']}",
+            f"{server['server_type']['prices'][0]['price_monthly']['gross'][:6]}",
         )
     console.print(table)
+
+
+@app.command("info", help="Get a detailed description of the server by its ID")
+def get_server(
+        id_server: int = typer.Argument(..., help="ID of the Server"),
+) -> None:
+    """
+    get detailed server info by ID
+
+    :param id_server: server ID
+    return None
+    """
+    handler = ServerHandler()
+    data = handler.get_server(id_server=id_server)['server']
+
+    table1 = Table(title=f"Base info for {data['id']} server", style="bold")
+    table1.add_column("Created Date", justify="center", style="green")
+    table1.add_column("Backup time", justify="center", style="green")
+    table1.add_column("Datacenter", justify="center", style="")
+    table1.add_column("Image", justify="center", style="")
+    table1.add_column("ISO", justify="center", style="")
+    table1.add_column("Labels", justify="center", style="")
+    table1.add_column("Volumes", justify="center", style="")
+    table1.add_column("Status", justify="center", style=f"bold {'red' if data['status'] == 'off' else 'green'}")
+
+    table2 = Table(title=f"Network info", style="bold")
+    table2.add_column("IPv4, MB", justify="center", style="bold cyan")
+    table2.add_column("IPv6", justify="center", style="bold cyan")
+    table2.add_column("Ingoing traffic, MB", justify="center", style="magenta")
+    table2.add_column("Outgoing traffic, MB", justify="center", style="magenta")
+    table2.add_column("Load balancers", justify="center", style="")
+
+    table1.add_row(
+        f"{data['created']}",
+        f"{data['backup_window']}",
+        f"{data['datacenter']['name']}",
+        f"{(data['image']['name'] if data['image'] else '-')}",
+        f"{(data['iso']['description'] if data['iso'] else '-')}",
+        f"{data['labels']}",
+        f"{data['volumes']}",
+        f"{data['status']}",
+    )
+
+    table2.add_row(
+        f"{data['public_net']['ipv4']['ip']}",
+        f"{data['public_net']['ipv6']['ip']}",
+        f"{data_ / 1000000 if (data_ := data['ingoing_traffic']) else 0}",
+        f"{data_ / 1000000 if (data_ := data['outgoing_traffic']) else 0}",
+        f"{data['load_balancers']}",
+    )
+    console = Console()
+    console.print(table1)
+    console.print(table2)
 
 
 @app.command("create", help="Create a server with custom options")
@@ -65,7 +118,7 @@ def create_server(
     Output in console status of this operation, also print root_password for server if
     ssh-key has not been set
 
-    :param name: Server nam
+    :param name: Server name
     :param image: Server build image
     :param location: ID or name of Location to create Server in
     :param server_type: ID or name of the Server type

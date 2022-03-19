@@ -36,6 +36,25 @@ class ServerHandler(HetznerHandler):
             )
         return resp.json()
 
+    def get_server(self, id_server: int) -> Dict[str, Any]:
+        """
+        make request to server for detailed info about server by ID
+
+        :param id_server: server ID
+        :return: json response as Dict[str, Any]
+        """
+        resp = requests.get(
+            url=f"{self.api_link}/{id_server}",
+            headers=self.basic_headers
+        )
+
+        if resp.status_code != 200:
+            raise ExMessageHandler(
+                self.create_exception_message(resp.json()),
+                terminate_after=True
+            )
+        return resp.json()
+
     def create_server(
             self,
             name: str,
