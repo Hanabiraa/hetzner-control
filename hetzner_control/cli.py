@@ -1,4 +1,5 @@
 import typer
+
 import hetzner_control.commands.server as server
 from hetzner_control import __app_name__, __version__
 
