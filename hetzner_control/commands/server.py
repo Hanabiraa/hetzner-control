@@ -1,6 +1,7 @@
 import typer
 from rich.console import Console, Text
 from rich.table import Table
+
 from hetzner_control.core.server import ServerHandler
 
 app = typer.Typer()
@@ -16,15 +17,13 @@ def callback():
 @app.command("list", help="Lists all servers you own")
 def get_servers() -> None:
     """
-    make request to server list.
+    Make request to server list.
     Output to the console in the form of a table a list of all servers and some of their properties.
 
     :return: None
     """
     handler = ServerHandler()
     data = handler.get_all_servers()
-    if not data:
-        return
 
     console = Console()
     table = Table(title="Server List")
@@ -83,8 +82,6 @@ def create_server(
         automount=automount,
         start_after_create=start_after_create
     )
-    if not data:
-        return
 
     console = Console()
     text = Text("Server has been created\n", style="bold green")
@@ -105,7 +102,7 @@ def delete_server(
     :return: None
     """
     handler = ServerHandler()
-    if handler.delete_server(id_server=id_server):
-        console = Console()
-        text = Text("Server has been deleted", style="bold green")
-        console.print(text)
+    handler.delete_server(id_server=id_server)
+    console = Console()
+    text = Text("Server has been deleted", style="bold green")
+    console.print(text)

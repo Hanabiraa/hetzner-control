@@ -1,4 +1,3 @@
-from typing import Dict, Any, Union
 from rich.console import Console, Text
 
 
