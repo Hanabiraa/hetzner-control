@@ -1,23 +1,11 @@
-import requests
 import json
-from rich.console import Console, Text
+from typing import Dict, Any, Union
+
+import requests
+from rich.console import Text
+
 from hetzner_control.core import HetznerHandler
-from typing import Dict, Optional, Any, Tuple, Union
-
-
-def server_handler_exception(response: Dict[str, Any]) -> None:
-    """
-    Very simple handler exception.
-    Output in console json error message.
-
-    :param response: json error message
-    :return: None
-    """
-    console = Console()
-    error_text = Text()
-    error_text.append("Error: ", style="bold red")
-    error_text.append(response['error']['message'], style="red")
-    console.print(error_text)
+from hetzner_control.core.exceptions import ExMessageHandler
 
 
 class ServerHandler(HetznerHandler):
@@ -26,25 +14,27 @@ class ServerHandler(HetznerHandler):
     """
 
     def __init__(self):
+        self.api_link = f"{self.get_prefix()}/servers"
         self.basic_headers = {
-            "Authorization": "Bearer " + self.API_TOKEN,
+            "Authorization": "Bearer " + self.get_api_token(),
             "Content-Type": "application/json",
         }
-        self.api_link = f"{self.prefix}/servers"
 
     def get_all_servers(self) -> Union[Dict[str, Any], None]:
         """
-        make a request to Hetzner for lists of servers you own in your account
+        Make a request to Hetzner for lists of servers you own in your account
         """
         resp = requests.get(
             url=self.api_link,
-            headers=self.basic_headers)
+            headers=self.basic_headers
+        )
 
         if resp.status_code != 200:
-            server_handler_exception(resp.json())
-            return None
-        else:
-            return resp.json()
+            raise ExMessageHandler(
+                self.create_exception_message(resp.json()),
+                terminate_after=True
+            )
+        return resp.json()
 
     def create_server(
             self,
@@ -56,7 +46,7 @@ class ServerHandler(HetznerHandler):
             start_after_create: bool = False,
     ) -> Union[Dict[str, Any], None]:
         """
-         make a request to Hetzner for create a server with specific parameters
+        Make a request to Hetzner for create a server with specific parameters
 
         :param name: server name
         :param image: server image
@@ -77,17 +67,19 @@ class ServerHandler(HetznerHandler):
         resp = requests.post(
             url=self.api_link,
             headers=self.basic_headers,
-            data=json.dumps(post_data))
+            data=json.dumps(post_data)
+        )
 
         if resp.status_code != 201:
-            server_handler_exception(resp.json())
-            return None
-        else:
-            return resp.json()
+            raise ExMessageHandler(
+                self.create_exception_message(resp.json()),
+                terminate_after=True
+            )
+        return resp.json()
 
-    def delete_server(self, id_server: int) -> Union[bool, None]:
+    def delete_server(self, id_server: int) -> None:
         """
-        make request to delete server by ID.
+        Make request to delete server by ID.
 
         :param id_server: uniq server id
         :return: True if server deleted else print error json message and return None
@@ -96,8 +88,22 @@ class ServerHandler(HetznerHandler):
             url=f"{self.api_link}/{id_server}",
             headers=self.basic_headers
         )
+
         if resp.status_code != 200:
-            server_handler_exception(resp.json())
-            return None
-        else:
-            return True
+            raise ExMessageHandler(
+                self.create_exception_message(resp.json()),
+                terminate_after=True
+            )
+
+    @staticmethod
+    def create_exception_message(response: Dict[str, Any]) -> Text:
+        """
+        wrapper function for generate rich.console.Text object with current colors
+        from json response from server
+
+        :return: str like rich.console.Text object
+        """
+        message = Text()
+        message.append("Error: ", style="bold red")
+        message.append(response['error']['message'], style="red")
+        return message
