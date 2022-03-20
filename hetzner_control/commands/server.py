@@ -17,7 +17,7 @@ def callback():
 @app.command("list", help="Lists all servers you own")
 def get_servers() -> None:
     """
-    Make request to server list.
+    Making request to server list.
     Output to the console in the form of a table a list of all servers and some of their properties.
 
     :return: None
@@ -56,7 +56,7 @@ def get_server(
         id_server: int = typer.Argument(..., help="ID of the Server"),
 ) -> None:
     """
-    get detailed server info by ID
+    Getting detailed server info by ID
 
     :param id_server: server ID
     return None
@@ -114,7 +114,7 @@ def create_server(
         start_after_create: bool = typer.Argument(False, help="Start Server right after creation"),
 ) -> None:
     """
-    Make request to create server with specific options.
+    Making request to create server with specific options.
     Output in console status of this operation, also print root_password for server if
     ssh-key has not been set
 
@@ -148,7 +148,7 @@ def delete_server(
         id_server: int = typer.Argument(..., help="ID of the Server"),
 ) -> None:
     """
-    Make request for deleting server by ID.
+    Making request for deleting server by ID.
     Output in console status of this operation.
 
     :param id_server: uniq server ID
@@ -166,7 +166,7 @@ def shut_down_server(
         id_server: int = typer.Argument(..., help="ID of the Server"),
 ) -> None:
     """
-    Make request to shut down server by ID.
+    Making request to shut down server by ID.
 
     :param id_server: uniq server ID
     :return: None
@@ -186,7 +186,7 @@ def shut_down_server(
         id_server: int = typer.Argument(..., help="ID of the Server"),
 ) -> None:
     """
-    Make request to shut down server by ID.
+    Making request to shut down server by ID.
 
     :param id_server: uniq server ID
     :return: None

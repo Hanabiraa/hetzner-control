@@ -22,7 +22,7 @@ class ServerHandler(HetznerHandler):
 
     def get_all_servers(self) -> Union[Dict[str, Any], None]:
         """
-        Make a request to Hetzner for lists of servers you own in your account
+        Making a request to Hetzner for lists of servers you own in your account
         """
         resp = requests.get(
             url=self.api_link,
@@ -65,7 +65,7 @@ class ServerHandler(HetznerHandler):
             start_after_create: bool = False,
     ) -> Union[Dict[str, Any], None]:
         """
-        Make a request to Hetzner for create a server with specific parameters
+        Making a request to Hetzner for create a server with specific parameters
 
         :param name: server name
         :param image: server image
@@ -73,7 +73,7 @@ class ServerHandler(HetznerHandler):
         :param server_type: id or name of the image the server is created from
         :param automount: auto-mount Volumes after attach
         :param start_after_create: start Server right after creation
-        :return: response
+        :return: json response as Dict[str, Any]
         """
         post_data = {
             "name": name,
@@ -98,7 +98,7 @@ class ServerHandler(HetznerHandler):
 
     def delete_server(self, id_server: int) -> None:
         """
-        Make request to delete server by ID.
+        Making request to delete server by ID.
 
         :param id_server: uniq server id
         :return: True if server deleted else print error json message and return None
@@ -113,19 +113,6 @@ class ServerHandler(HetznerHandler):
                 self.__create_exception_message(resp.json()),
                 terminate_after=True
             )
-
-    @staticmethod
-    def __create_exception_message(response: Dict[str, Any]) -> Text:
-        """
-        wrapper function for generate rich.console.Text object with current colors
-        from json response from server
-
-        :return: str like rich.console.Text object
-        """
-        message = Text()
-        message.append("Error: ", style="bold red")
-        message.append(response['error']['message'], style="red")
-        return message
 
     def server_down(self, id_server: int) -> Dict[str, Any]:
         """
@@ -142,7 +129,7 @@ class ServerHandler(HetznerHandler):
 
     def server_up(self, id_server: int) -> Dict[str, Any]:
         """
-        Makes request to power on the server by id
+        Making request to power on the server by id
 
         :param id_server: server ID
         :return: json response as Dict[str, Any]
@@ -153,6 +140,19 @@ class ServerHandler(HetznerHandler):
         )
         return data
 
+    @staticmethod
+    def __create_exception_message(response: Dict[str, Any]) -> Text:
+        """
+        Wrapper function for generate rich.console.Text object with current colors
+        from json response from server
+
+        :return: str like rich.console.Text object
+        """
+        message = Text()
+        message.append("Error: ", style="bold red")
+        message.append(response['error']['message'], style="red")
+        return message
+
     def __make_action(
             self,
             id_server: int,
@@ -160,7 +160,7 @@ class ServerHandler(HetznerHandler):
             params: Union[Dict[str, Any], None] = None
     ) -> Dict[str, Any]:
         """
-        Makes a request to perform a specific action on the server by ID
+        Making a request to perform a specific action on the server by ID
 
         :param id_server: server ID
         :param action: action to be taken on the server
