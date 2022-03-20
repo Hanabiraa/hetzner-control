@@ -159,3 +159,43 @@ def delete_server(
     console = Console()
     text = Text("Server has been deleted", style="bold green")
     console.print(text)
+
+
+@app.command("down", help="Power off server by ID")
+def shut_down_server(
+        id_server: int = typer.Argument(..., help="ID of the Server"),
+) -> None:
+    """
+    Make request to shut down server by ID.
+
+    :param id_server: uniq server ID
+    :return: None
+    """
+    handler = ServerHandler()
+    data = handler.server_down(id_server=id_server)
+    console = Console()
+    text = Text(
+        f"Command {data['action']['command']}\nCommand status: {data['action']['status']}",
+        style="bold green"
+    )
+    console.print(text)
+
+
+@app.command("up", help="Power on server by ID")
+def shut_down_server(
+        id_server: int = typer.Argument(..., help="ID of the Server"),
+) -> None:
+    """
+    Make request to shut down server by ID.
+
+    :param id_server: uniq server ID
+    :return: None
+    """
+    handler = ServerHandler()
+    data = handler.server_up(id_server=id_server)
+    console = Console()
+    text = Text(
+        f"Command {data['action']['command']}\nCommand status: {data['action']['status']}",
+        style="bold green"
+    )
+    console.print(text)

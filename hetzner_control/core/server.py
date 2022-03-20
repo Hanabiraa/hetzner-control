@@ -126,3 +126,57 @@ class ServerHandler(HetznerHandler):
         message.append("Error: ", style="bold red")
         message.append(response['error']['message'], style="red")
         return message
+
+    def server_down(self, id_server: int) -> Dict[str, Any]:
+        """
+        Makes request to shut down the server by id
+
+        :param id_server: server ID
+        :return: json response as Dict[str, Any]
+        """
+        data = self.__make_action(
+            id_server=id_server,
+            action="shutdown"
+        )
+        return data
+
+    def server_up(self, id_server: int) -> Dict[str, Any]:
+        """
+        Makes request to power on the server by id
+
+        :param id_server: server ID
+        :return: json response as Dict[str, Any]
+        """
+        data = self.__make_action(
+            id_server=id_server,
+            action="poweron"
+        )
+        return data
+
+    def __make_action(
+            self,
+            id_server: int,
+            action: str,
+            params: Union[Dict[str, Any], None] = None
+    ) -> Dict[str, Any]:
+        """
+        Makes a request to perform a specific action on the server by ID
+
+        :param id_server: server ID
+        :param action: action to be taken on the server
+        :param params: parameters that are required for certain actions
+
+        :return: json response as Dict[str, Any]
+        """
+        resp = requests.post(
+            url=f"{self.api_link}/{id_server}/actions/{action}",
+            headers=self.basic_headers,
+            params=(params if params else {})
+        )
+
+        if resp.status_code != 201:
+            raise ExMessageHandler(
+                self.__create_exception_message(resp.json()),
+                terminate_after=True
+            )
+        return resp.json()
