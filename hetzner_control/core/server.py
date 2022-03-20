@@ -2,7 +2,6 @@ import json
 from typing import Dict, Any, Union
 
 import requests
-from rich.console import Text
 
 from hetzner_control.core import HetznerHandler
 from hetzner_control.core.exceptions import ExMessageHandler
@@ -31,7 +30,7 @@ class ServerHandler(HetznerHandler):
 
         if resp.status_code != 200:
             raise ExMessageHandler(
-                self.__create_exception_message(resp.json()),
+                self.create_exception_message(resp.json()),
                 terminate_after=True
             )
         return resp.json()
@@ -50,7 +49,7 @@ class ServerHandler(HetznerHandler):
 
         if resp.status_code != 200:
             raise ExMessageHandler(
-                self.__create_exception_message(resp.json()),
+                self.create_exception_message(resp.json()),
                 terminate_after=True
             )
         return resp.json()
@@ -91,7 +90,7 @@ class ServerHandler(HetznerHandler):
 
         if resp.status_code != 201:
             raise ExMessageHandler(
-                self.__create_exception_message(resp.json()),
+                self.create_exception_message(resp.json()),
                 terminate_after=True
             )
         return resp.json()
@@ -110,7 +109,7 @@ class ServerHandler(HetznerHandler):
 
         if resp.status_code != 200:
             raise ExMessageHandler(
-                self.__create_exception_message(resp.json()),
+                self.create_exception_message(resp.json()),
                 terminate_after=True
             )
 
@@ -140,19 +139,6 @@ class ServerHandler(HetznerHandler):
         )
         return data
 
-    @staticmethod
-    def __create_exception_message(response: Dict[str, Any]) -> Text:
-        """
-        Wrapper function for generate rich.console.Text object with current colors
-        from json response from server
-
-        :return: str like rich.console.Text object
-        """
-        message = Text()
-        message.append("Error: ", style="bold red")
-        message.append(response['error']['message'], style="red")
-        return message
-
     def __make_action(
             self,
             id_server: int,
@@ -176,7 +162,7 @@ class ServerHandler(HetznerHandler):
 
         if resp.status_code != 201:
             raise ExMessageHandler(
-                self.__create_exception_message(resp.json()),
+                self.create_exception_message(resp.json()),
                 terminate_after=True
             )
         return resp.json()
