@@ -31,7 +31,7 @@ class ServerHandler(HetznerHandler):
 
         if resp.status_code != 200:
             raise ExMessageHandler(
-                self.create_exception_message(resp.json()),
+                self.__create_exception_message(resp.json()),
                 terminate_after=True
             )
         return resp.json()
@@ -50,7 +50,7 @@ class ServerHandler(HetznerHandler):
 
         if resp.status_code != 200:
             raise ExMessageHandler(
-                self.create_exception_message(resp.json()),
+                self.__create_exception_message(resp.json()),
                 terminate_after=True
             )
         return resp.json()
@@ -91,7 +91,7 @@ class ServerHandler(HetznerHandler):
 
         if resp.status_code != 201:
             raise ExMessageHandler(
-                self.create_exception_message(resp.json()),
+                self.__create_exception_message(resp.json()),
                 terminate_after=True
             )
         return resp.json()
@@ -110,12 +110,12 @@ class ServerHandler(HetznerHandler):
 
         if resp.status_code != 200:
             raise ExMessageHandler(
-                self.create_exception_message(resp.json()),
+                self.__create_exception_message(resp.json()),
                 terminate_after=True
             )
 
     @staticmethod
-    def create_exception_message(response: Dict[str, Any]) -> Text:
+    def __create_exception_message(response: Dict[str, Any]) -> Text:
         """
         wrapper function for generate rich.console.Text object with current colors
         from json response from server
