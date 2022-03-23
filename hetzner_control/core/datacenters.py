@@ -1,7 +1,7 @@
 import requests
 from typing import Dict, Any, Union
 
-from hetzner_control.core import HetznerHandler, ExMessageHandler
+from . import HetznerHandler, ExMessageHandler
 
 
 class DatacenterHandler(HetznerHandler):

@@ -3,8 +3,8 @@ from typing import Dict, Any, Union
 
 import requests
 
-from hetzner_control.core import HetznerHandler
-from hetzner_control.core.exceptions import ExMessageHandler
+from . import HetznerHandler
+from .exceptions import ExMessageHandler
 
 
 class ServerHandler(HetznerHandler):

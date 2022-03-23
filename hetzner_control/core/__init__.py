@@ -3,7 +3,7 @@ from typing import Dict, Any
 
 from rich.console import Text
 
-from hetzner_control.core.exceptions import ExMessageHandler
+from .exceptions import ExMessageHandler
 
 
 class HetznerHandler:

@@ -2,7 +2,7 @@ import typer
 from rich.console import Console, Text
 from rich.table import Table
 
-from hetzner_control.core.server import ServerHandler
+from ..core.server import ServerHandler
 
 app = typer.Typer()
 
