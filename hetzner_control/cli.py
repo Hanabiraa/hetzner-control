@@ -1,10 +1,12 @@
 import typer
 
+import hetzner_control.commands.info as info
 import hetzner_control.commands.server as server
 from hetzner_control import __app_name__, __version__
 
 app = typer.Typer()
 app.add_typer(server.app, name="server")
+app.add_typer(info.app, name="info")
 
 
 @app.command("version")
