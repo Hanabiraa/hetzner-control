@@ -5,6 +5,8 @@ from rich.table import Table
 from ..core.server import ServerHandler
 
 app = typer.Typer()
+_handler = ServerHandler()
+_console = Console()
 
 
 @app.callback()
@@ -22,12 +24,10 @@ def get_servers() -> None:
 
     :return: None
     """
-    handler = ServerHandler()
-    data = handler.get_all_servers()
+    global _handler
+    data = _handler.get_all_servers()
 
-    console = Console()
     table = Table(title="Server List")
-
     table.add_column("ID", justify="center", style="bold cyan")
     table.add_column("Status", justify="center", style="bold cyan")
     table.add_column("Name", justify="center")
@@ -48,7 +48,9 @@ def get_servers() -> None:
             f"{server['server_type']['disk']}",
             f"{server['server_type']['prices'][0]['price_monthly']['gross'][:6]}",
         )
-    console.print(table)
+
+    global _console
+    _console.print(table)
 
 
 @app.command("info", help="Get a detailed description of the server by its ID")
@@ -61,27 +63,27 @@ def get_server(
     :param id_server: server ID
     return None
     """
-    handler = ServerHandler()
-    data = handler.get_server(id_server=id_server)['server']
+    global _handler
+    data = _handler.get_server(id_server=id_server)['server']
 
-    table1 = Table(title=f"Base info for {data['id']} server", style="bold")
-    table1.add_column("Created Date", justify="center", style="green")
-    table1.add_column("Backup time", justify="center", style="green")
-    table1.add_column("Datacenter", justify="center", style="")
-    table1.add_column("Image", justify="center", style="")
-    table1.add_column("ISO", justify="center", style="")
-    table1.add_column("Labels", justify="center", style="")
-    table1.add_column("Volumes", justify="center", style="")
-    table1.add_column("Status", justify="center", style=f"bold {'red' if data['status'] == 'off' else 'green'}")
+    table_base = Table(title=f"Base info for {data['id']} server", style="bold")
+    table_base.add_column("Created Date", justify="center", style="green")
+    table_base.add_column("Backup time", justify="center", style="green")
+    table_base.add_column("Datacenter", justify="center", style="")
+    table_base.add_column("Image", justify="center", style="")
+    table_base.add_column("ISO", justify="center", style="")
+    table_base.add_column("Labels", justify="center", style="")
+    table_base.add_column("Volumes", justify="center", style="")
+    table_base.add_column("Status", justify="center", style=f"bold {'red' if data['status'] == 'off' else 'green'}")
 
-    table2 = Table(title=f"Network info", style="bold")
-    table2.add_column("IPv4, MB", justify="center", style="bold cyan")
-    table2.add_column("IPv6", justify="center", style="bold cyan")
-    table2.add_column("Ingoing traffic, MB", justify="center", style="magenta")
-    table2.add_column("Outgoing traffic, MB", justify="center", style="magenta")
-    table2.add_column("Load balancers", justify="center", style="")
+    table_net = Table(title=f"Network info", style="bold")
+    table_net.add_column("IPv4, MB", justify="center", style="bold cyan")
+    table_net.add_column("IPv6", justify="center", style="bold cyan")
+    table_net.add_column("Ingoing traffic, MB", justify="center", style="magenta")
+    table_net.add_column("Outgoing traffic, MB", justify="center", style="magenta")
+    table_net.add_column("Load balancers", justify="center", style="")
 
-    table1.add_row(
+    table_base.add_row(
         f"{data['created']}",
         f"{data['backup_window']}",
         f"{data['datacenter']['name']}",
@@ -92,16 +94,20 @@ def get_server(
         f"{data['status']}",
     )
 
-    table2.add_row(
+    table_net.add_row(
         f"{data['public_net']['ipv4']['ip']}",
         f"{data['public_net']['ipv6']['ip']}",
         f"{data_ / 1000000 if (data_ := data['ingoing_traffic']) else 0}",
         f"{data_ / 1000000 if (data_ := data['outgoing_traffic']) else 0}",
         f"{data['load_balancers']}",
     )
-    console = Console()
-    console.print(table1)
-    console.print(table2)
+
+    global _console
+    _console.print(
+        table_base,
+        table_net,
+        sep='\n'
+    )
 
 
 @app.command("create", help="Create a server with custom options")
@@ -126,8 +132,8 @@ def create_server(
     :param start_after_create: Start Server right after creation
     :return: None
     """
-    handler = ServerHandler()
-    data = handler.create_server(
+    global _handler
+    data = _handler.create_server(
         name=name,
         image=image,
         location=location,
@@ -136,11 +142,11 @@ def create_server(
         start_after_create=start_after_create
     )
 
-    console = Console()
+    global _console
     text = Text("Server has been created\n", style="bold green")
     text.append("Your root_password: ", style="bold cyan")
-    text.append(data["root_password"], style="black")
-    console.print(text)
+    text.append(data["root_password"], style="")
+    _console.print(text)
 
 
 @app.command("delete", help="Delete a server")
@@ -154,11 +160,12 @@ def delete_server(
     :param id_server: uniq server ID
     :return: None
     """
-    handler = ServerHandler()
-    handler.delete_server(id_server=id_server)
-    console = Console()
+    global _handler
+    _handler.delete_server(id_server=id_server)
+
+    global _console
     text = Text("Server has been deleted", style="bold green")
-    console.print(text)
+    _console.print(text)
 
 
 @app.command("down", help="Power off server by ID")
@@ -171,14 +178,15 @@ def shut_down_server(
     :param id_server: uniq server ID
     :return: None
     """
-    handler = ServerHandler()
-    data = handler.server_down(id_server=id_server)
-    console = Console()
+    global _handler
+    data = _handler.server_down(id_server=id_server)
+
+    global _console
     text = Text(
         f"Command {data['action']['command']}\nCommand status: {data['action']['status']}",
         style="bold green"
     )
-    console.print(text)
+    _console.print(text)
 
 
 @app.command("up", help="Power on server by ID")
@@ -191,11 +199,12 @@ def shut_down_server(
     :param id_server: uniq server ID
     :return: None
     """
-    handler = ServerHandler()
-    data = handler.server_up(id_server=id_server)
-    console = Console()
+    global _handler
+    data = _handler.server_up(id_server=id_server)
+
+    global _console
     text = Text(
         f"Command {data['action']['command']}\nCommand status: {data['action']['status']}",
         style="bold green"
     )
-    console.print(text)
+    _console.print(text)

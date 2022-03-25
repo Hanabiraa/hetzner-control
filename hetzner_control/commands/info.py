@@ -3,12 +3,9 @@ from rich.console import Console
 from rich.table import Table
 
 import hetzner_control.commands.price as price
-
 from ..core.datacenters import DatacenterHandler
-from ..core.pricing import PricingHandler
 
 app = typer.Typer()
-
 app.add_typer(price.app, name="price")
 
 
