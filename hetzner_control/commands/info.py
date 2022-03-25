@@ -2,9 +2,14 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
+import hetzner_control.commands.price as price
+
 from ..core.datacenters import DatacenterHandler
+from ..core.pricing import PricingHandler
 
 app = typer.Typer()
+
+app.add_typer(price.app, name="price")
 
 
 @app.callback()
@@ -25,7 +30,7 @@ def get_all_datacenters():
     handler = DatacenterHandler()
     data = handler.get_all_datacenters()
 
-    table = Table(title="Datacenters")
+    table = Table()
     table.add_column("id", justify="center", style="green")
     table.add_column("Name", justify="center", style="magenta")
     table.add_column("Location name", justify="center", style="magenta")
