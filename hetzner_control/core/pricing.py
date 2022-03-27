@@ -1,5 +1,6 @@
+from typing import Dict, Any
+
 import requests
-from typing import Dict, Any, Union
 
 from . import HetznerHandler, ExMessageHandler
 
@@ -12,10 +13,7 @@ class PricingHandler(HetznerHandler):
 
     def __init__(self):
         self.api_link = f"{self.get_prefix()}/pricing"
-        self.basic_headers = {
-            "Authorization": "Bearer " + self.get_api_token(),
-            "Content-Type": "application/json",
-        }
+        self.headers = self.get_headers()
 
     def get_all_prices(self) -> Dict[str, Any]:
         """
@@ -26,7 +24,7 @@ class PricingHandler(HetznerHandler):
         """
         resp = requests.get(
             url=self.api_link,
-            headers=self.basic_headers
+            headers=self.headers
         )
 
         if resp.status_code != 200:

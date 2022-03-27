@@ -16,16 +16,12 @@ class HetznerHandler:
         return "https://api.hetzner.cloud/v1"
 
     @staticmethod
-    def get_api_token():
-        token = os.getenv("HETZNER_API_TOKEN", default=None)
-
-        if not token:
-            message = Text()
-            message.append("API TOKEN not found!\n", style="bold red")
-            message.append("Please add in terminal configuration file like .bashrc (.zshrc, etc) this:\n")
-            message.append(f"export HETZNER_API_TOKEN='your_api_token'", style="bold")
-            raise ExMessageHandler(message, terminate_after=True)
-        return token
+    def get_headers():
+        headers = {
+            "Authorization": "Bearer " + HetznerHandler.__get_api_token(),
+            "Content-Type": "application/json",
+        }
+        return headers
 
     @staticmethod
     def create_exception_message(response: Dict[str, Any]) -> Text:
@@ -39,3 +35,15 @@ class HetznerHandler:
         message.append("Error: ", style="bold red")
         message.append(response['error']['message'], style="red")
         return message
+
+    @staticmethod
+    def __get_api_token():
+        token = os.getenv("HETZNER_API_TOKEN", default=None)
+
+        if not token:
+            message = Text()
+            message.append("API TOKEN not found!\n", style="bold red")
+            message.append("Please add in terminal configuration file like .bashrc (.zshrc, etc) this:\n")
+            message.append(f"export HETZNER_API_TOKEN='your_api_token'", style="bold")
+            raise ExMessageHandler(message, terminate_after=True)
+        return token

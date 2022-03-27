@@ -14,10 +14,7 @@ class ServerHandler(HetznerHandler):
 
     def __init__(self):
         self.api_link = f"{self.get_prefix()}/servers"
-        self.basic_headers = {
-            "Authorization": "Bearer " + self.get_api_token(),
-            "Content-Type": "application/json",
-        }
+        self.headers = self.get_headers()
 
     def get_all_servers(self) -> Union[Dict[str, Any], None]:
         """
@@ -25,7 +22,7 @@ class ServerHandler(HetznerHandler):
         """
         resp = requests.get(
             url=self.api_link,
-            headers=self.basic_headers
+            headers=self.headers
         )
 
         if resp.status_code != 200:
@@ -44,7 +41,7 @@ class ServerHandler(HetznerHandler):
         """
         resp = requests.get(
             url=f"{self.api_link}/{id_server}",
-            headers=self.basic_headers
+            headers=self.headers
         )
 
         if resp.status_code != 200:
@@ -84,7 +81,7 @@ class ServerHandler(HetznerHandler):
         }
         resp = requests.post(
             url=self.api_link,
-            headers=self.basic_headers,
+            headers=self.headers,
             data=json.dumps(post_data)
         )
 
@@ -104,7 +101,7 @@ class ServerHandler(HetznerHandler):
         """
         resp = requests.delete(
             url=f"{self.api_link}/{id_server}",
-            headers=self.basic_headers
+            headers=self.headers
         )
 
         if resp.status_code != 200:
@@ -156,7 +153,7 @@ class ServerHandler(HetznerHandler):
         """
         resp = requests.post(
             url=f"{self.api_link}/{id_server}/actions/{action}",
-            headers=self.basic_headers,
+            headers=self.headers,
             params=(params if params else {})
         )
 

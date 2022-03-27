@@ -1,5 +1,6 @@
+from typing import Dict, Any
+
 import requests
-from typing import Dict, Any, Union
 
 from . import HetznerHandler, ExMessageHandler
 
@@ -12,10 +13,7 @@ class DatacenterHandler(HetznerHandler):
 
     def __init__(self):
         self.api_link = f"{self.get_prefix()}/datacenters"
-        self.basic_headers = {
-            "Authorization": "Bearer " + self.get_api_token(),
-            "Content-Type": "application/json",
-        }
+        self.headers = self.get_headers()
 
     def get_all_datacenters(self) -> Dict[str, Any]:
         """
@@ -25,7 +23,7 @@ class DatacenterHandler(HetznerHandler):
         """
         resp = requests.get(
             url=self.api_link,
-            headers=self.basic_headers
+            headers=self.headers
         )
 
         if resp.status_code != 200:
