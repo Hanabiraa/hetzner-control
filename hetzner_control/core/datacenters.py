@@ -7,8 +7,7 @@ from . import HetznerHandler, ExMessageHandler
 
 class DatacenterHandler(HetznerHandler):
     """
-    Hetzner Handler class for various reference
-     information regarding data centers, images, etc.
+    Hetzner Handler class that provides reference information about datacenters
     """
 
     def __init__(self):

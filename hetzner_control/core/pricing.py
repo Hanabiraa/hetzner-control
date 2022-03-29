@@ -7,8 +7,8 @@ from . import HetznerHandler, ExMessageHandler
 
 class PricingHandler(HetznerHandler):
     """
-    Hetzner Handler class
-    for prices for all resources available on the platform.
+    Hetzner Handler class that provides reference information
+     about prices for all resources available on the platform
     """
 
     def __init__(self):

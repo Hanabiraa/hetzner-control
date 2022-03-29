@@ -17,7 +17,8 @@ class BaseExceptionHandler(Exception):
 
 class ExMessageHandler(BaseExceptionHandler):
     """
-    Exception class, which print in console rich.console.Text object
+    Exception class, which print in console rich.console.Text object and,
+     dependent of flag 'terminate_after' terminate program
     """
 
     def __init__(self, message: Text, terminate_after: bool = False):
@@ -26,5 +27,8 @@ class ExMessageHandler(BaseExceptionHandler):
         if terminate_after:
             self.terminate_program()
 
-    def __error_message(self):
+    def __error_message(self) -> None:
+        """
+        print by rich.console.Console() error message rich.console.Text() to stdout
+        """
         Console().print(self.message)

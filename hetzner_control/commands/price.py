@@ -13,14 +13,14 @@ _console = Console()
 
 
 @app.callback()
-def callback():
+def callback() -> None:
     """
-    Print as table prices for all or a specific resource
+    Information about price for all resources available on the platform
     """
 
 
 @app.command("all", help="Information about price for all resources")
-def get_all_prices():
+def get_all_prices() -> None:
     """
     Print price for all resources available on the platform
     """
@@ -35,7 +35,7 @@ def get_all_prices():
 
 
 @app.command("float_ip", help="Information about price for floating IP")
-def get_float_ip_price():
+def get_float_ip_price() -> None:
     """
     Printing floating IP price as Table in console.
     """
@@ -57,7 +57,7 @@ def get_float_ip_price():
 
 
 @app.command("float_ips", help="Information about price for floating IPs")
-def get_float_ips_price():
+def get_float_ips_price() -> None:
     """
     Printing floating IPs price as Table in console
     """
@@ -85,7 +85,7 @@ def get_float_ips_price():
 
 
 @app.command("image", help="Information about price for image")
-def get_image_price():
+def get_image_price() -> None:
     """
     Printing image price as Table in console
     """
@@ -107,7 +107,7 @@ def get_image_price():
 
 
 @app.command("load_balancer", help="Information about price and types for load balancer")
-def get_load_balancers_price():
+def get_load_balancers_price() -> None:
     """
     Printing load balancers types and price as Table in console
     """
@@ -141,7 +141,7 @@ def get_load_balancers_price():
 
 
 @app.command("backup", help="Information about price for server backup")
-def get_server_backup_price():
+def get_server_backup_price() -> None:
     """
     Printing server backups price as Table in console
     """
@@ -161,7 +161,7 @@ def get_server_backup_price():
 
 
 @app.command("server", help="Information about price and types for server")
-def get_server_types_price():
+def get_server_types_price() -> None:
     """
     Printing server configurations price as Table in console
     """
@@ -195,7 +195,7 @@ def get_server_types_price():
 
 
 @app.command("traffic", help="Information about traffic price")
-def get_traffic_price():
+def get_traffic_price() -> None:
     """
     Printing traffic price as Table in console
     """
@@ -215,7 +215,7 @@ def get_traffic_price():
 
 
 @app.command("volume", help="Information about volume price")
-def get_volume_price():
+def get_volume_price() -> None:
     """
     Printing volume price as Table in console
     """

@@ -16,7 +16,7 @@ class HetznerHandler:
         return "https://api.hetzner.cloud/v1"
 
     @staticmethod
-    def get_headers():
+    def get_headers() -> Dict[str, str]:
         headers = {
             "Authorization": "Bearer " + HetznerHandler.__get_api_token(),
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ class HetznerHandler:
         return message
 
     @staticmethod
-    def __get_api_token():
+    def __get_api_token() -> str:
         token = os.getenv("HETZNER_API_TOKEN", default=None)
 
         if not token:

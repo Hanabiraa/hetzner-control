@@ -3,21 +3,23 @@ from rich.console import Console
 from rich.table import Table
 
 import hetzner_control.commands.price as price
+import hetzner_control.commands.server_types as server_types
 from ..core.datacenters import DatacenterHandler
 
 app = typer.Typer()
 app.add_typer(price.app, name="price")
+app.add_typer(server_types.app, name="server")
 
 
 @app.callback()
-def callback():
+def callback() -> None:
     """
     Information about available data centers, images, ISOs and more
     """
 
 
 @app.command("datacenters", help="List all datacenters, which available in current moment")
-def get_all_datacenters():
+def get_all_datacenters() -> None:
     """
     Making request to datacenters list.
     Output to the console in the form of a table a list of all datacenters and some of their properties.
