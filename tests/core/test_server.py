@@ -155,7 +155,7 @@ class TestCreateServer:
             content_type="application/json",
             match=self.matchers_,
         )
-        
+
         with pytest.raises(SystemExit):
             _ = ServerHandler().create_server(
                 name="testing",
@@ -249,7 +249,7 @@ class TestMakeAction:
         responses.add(
             method=responses.POST,
             url=self.url,
-            json={"error": "not found"},
+            json={"error": {"message": "bad status "}},
             status=500,
             content_type="application/json",
             match=self.matchers_,
