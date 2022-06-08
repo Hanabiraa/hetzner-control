@@ -48,7 +48,7 @@ class TestGetAllServers:
         responses.add(
             method=responses.GET,
             url=self.url,
-            json={"error": {"message": "bad status "}},
+            json={"error": {"message": "bad status"}},
             status=500,
             content_type="application/json",
             match=[
@@ -91,7 +91,7 @@ class TestGetServer:
         responses.add(
             method=responses.GET,
             url=self.url,
-            json={"error": {"message": "bad status "}},
+            json={"error": {"message": "bad status"}},
             status=500,
             content_type="application/json",
             match=[
@@ -100,7 +100,9 @@ class TestGetServer:
         )
 
         with pytest.raises(SystemExit):
-            _ = ServerHandler().get_server(id_server=100)
+            _ = ServerHandler().get_server(
+                id_server=100
+            )
 
 
 class TestCreateServer:
@@ -150,7 +152,7 @@ class TestCreateServer:
         responses.add(
             method=responses.POST,
             url=self.url,
-            json={"error": {"message": "bad status "}},
+            json={"error": {"message": "bad status"}},
             status=500,
             content_type="application/json",
             match=self.matchers_,
@@ -201,7 +203,7 @@ class TestDeleteServer:
         responses.add(
             method=responses.DELETE,
             url=self.url,
-            json={"error": {"message": "bad status "}},
+            json={"error": {"message": "bad status"}},
             status=500,
             content_type="application/json",
             match=self.matchers_,
@@ -249,7 +251,7 @@ class TestMakeAction:
         responses.add(
             method=responses.POST,
             url=self.url,
-            json={"error": {"message": "bad status "}},
+            json={"error": {"message": "bad status"}},
             status=500,
             content_type="application/json",
             match=self.matchers_,
