@@ -19,9 +19,6 @@ htz = "hetzner_control.cli:main"
 pytest = "^7.1.0"
 responses = "^0.20.0"
 
-[tool.poetry.scripts]
-htz = "hetzner_control.cli:main"
-
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
