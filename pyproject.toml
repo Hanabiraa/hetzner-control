@@ -3,6 +3,7 @@ name = "hetzner-control"
 version = "0.2.0"
 description = "CLI application for managing servers on the Hetzner platform"
 authors = ["Hanabira <workflow.elec@gmail.com>"]
+readme = "README.md"
 license = "MIT License"
 
 [tool.poetry.dependencies]
