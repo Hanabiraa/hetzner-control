@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hetzner-control"
-version = "0.1.0"
+version = "0.2.0"
 description = "CLI application for managing servers on the Hetzner platform"
 authors = ["Hanabira <workflow.elec@gmail.com>"]
 license = "MIT License"
