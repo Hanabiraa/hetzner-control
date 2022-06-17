@@ -113,11 +113,11 @@ def get_server(
 @app.command("create", help="Create a server with custom options")
 def create_server(
         name: str = typer.Argument(..., help="Server name"),
-        image: str = typer.Argument("ubuntu-20.04", help="Server build image"),
-        location: str = typer.Argument("nbg1", help="ID or name of Location to create Server in"),
-        server_type: str = typer.Argument("cx11", help="ID or name of the Server type"),
-        automount: bool = typer.Argument(False, help="Auto-mount Volumes after attach"),
-        start_after_create: bool = typer.Argument(False, help="Start Server right after creation"),
+        image: str = typer.Option("ubuntu-20.04", help="Server build image"),
+        location: str = typer.Option("nbg1", help="ID or name of Location to create Server in"),
+        server_type: str = typer.Option("cx11", help="ID or name of the Server type"),
+        automount: bool = typer.Option(False, help="Auto-mount Volumes after attach"),
+        start_after_create: bool = typer.Option(False, help="Start Server right after creation"),
 ) -> None:
     """
     Making request to create server with specific options.
