@@ -62,7 +62,10 @@ $ export HETZNER_API_TOKEN="YOUR_HETZNER_TOKEN_HERE"
 
 ## Want to contribute?
 
-1. Clone repo and create a new branch: $ git checkout https://github.com/Hanabiraa/hetzner-control -b name_for_new_branch.
+1. Clone repo and create a new branch:
+```shell
+$ git checkout https://github.com/Hanabiraa/hetzner-control -b name_for_new_branch
+```
 2. Make changes and test
 3. Submit Pull Request with comprehensive description of changes
 
