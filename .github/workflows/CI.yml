@@ -5,15 +5,14 @@ on:
     branches: [ "trunk" ]
   pull_request:
     branches: [ "trunk" ]
-  workflow_dispatch:
-  
+
 jobs:
   test:
     strategy:
       fail-fast: true
       matrix:
-        os: [ "ubuntu-latest", "macos-latest" ]
-        python-version: [ "3.8" ]
+        os: [ "ubuntu-latest" ]
+        python-version: [ "3.8.10" ]
     runs-on: ${{ matrix.os }}
     steps:
       #----------------------------------------------
