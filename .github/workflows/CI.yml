@@ -9,6 +9,7 @@ on:
 env:
   HETZNER_API_TOKEN: 1111
 
+
 jobs:
   test:
     strategy:
