@@ -16,12 +16,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install Poetry
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install poetry
-        poetry config virtualenvs.create true
-        poetry config virtualenvs.in-project false
-        poetry config virtualenvs.path .virtualenvs
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install poetry
+          poetry config virtualenvs.create true
+          poetry config virtualenvs.in-project false
+          poetry config virtualenvs.path .virtualenvs
       - name: Poetry Version
         id: poetry-version
         run: echo "::set-output name=version::$(poetry --version | grep -oP '[\d\.]+')"
