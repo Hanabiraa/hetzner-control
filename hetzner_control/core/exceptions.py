@@ -12,7 +12,7 @@ class BaseExceptionHandler(Exception):
         fast terminate.
         Purpose - for hide traceback
         """
-        exit()
+        exit(1)
 
 
 class ExMessageHandler(BaseExceptionHandler):
