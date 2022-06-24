@@ -10,18 +10,23 @@ jobs:
   test:
     env:
       HETZNER_API_TOKEN: 1111
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ "ubuntu-latest"]
+        python-version: [ "3.8"]
+    runs-on: ${{ matrix.os }}
     steps:
       #----------------------------------------------
       #       check-out repo and set-up python
       #----------------------------------------------
       - name: Check out repository
         uses: actions/checkout@v2
-      - name: Set up python
+      - name: Set up python ${{ matrix.python-version }}
         id: setup-python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8.9
+          python-version: ${{ matrix.python-version }}
       #----------------------------------------------
       #  -----  install & configure poetry  -----
       #----------------------------------------------
