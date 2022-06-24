@@ -17,7 +17,7 @@ def mock_settings_env_vars():
         yield
 
 
-class TestGetAllServerTypes:
+class TestGetAllPrices:
     """
     For test PricingHandler.get_all_prices() method for good/bad response
     """

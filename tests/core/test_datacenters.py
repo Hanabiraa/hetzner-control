@@ -17,7 +17,7 @@ def mock_settings_env_vars():
         yield
 
 
-class TestGetAllServerTypes:
+class TestGetAllDatacenters:
     """
     For test DatacenterHandler.get_all_datacenters() method for good/bad response
     """
