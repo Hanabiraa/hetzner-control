@@ -8,14 +8,14 @@ on:
 
 jobs:
   test:
-    env:
-      HETZNER_API_TOKEN: 1111
+#    env:
+#      HETZNER_API_TOKEN: 1111
 
     strategy:
       fail-fast: true
       matrix:
         os: [ "ubuntu-latest" ]
-        python-version: [ "3.8.9" ]
+        python-version: [ "3.8.9", "3.9" ]
 
     runs-on: ${{ matrix.os }}
 
@@ -49,16 +49,8 @@ jobs:
         run: poetry install --no-root
 
       #----------------------------------------------
-      # install your root project, if required
-      #----------------------------------------------
-      - name: Install library
-        run: poetry install
-
-      - name: View project
-        run: ls -la
-      #----------------------------------------------
       #              run test suite
       #----------------------------------------------
       - name: Run tests
         run: |
-          poetry run pytest tests/core/test_server.py
+          poetry run pytest
