@@ -61,4 +61,4 @@ jobs:
       #----------------------------------------------
       - name: Run tests
         run: |
-          poetry run pytest tests/test_cli.py
+          poetry run pytest tests/core/test_server.py
