@@ -3,7 +3,7 @@ from typer.testing import CliRunner
 from hetzner_control import __app_name__, __version__
 from hetzner_control.cli import app
 
-runner = CliRunner()
+# runner = CliRunner()
 
 
 # class TestCli:
