@@ -5,12 +5,10 @@ on:
     branches: [ "trunk" ]
   pull_request:
     branches: [ "trunk" ]
+  workflow_dispatch:
 
 jobs:
-  test:
-#    env:
-#      HETZNER_API_TOKEN: 1111
-
+  testing_core_functionality:
     strategy:
       fail-fast: true
       matrix:
@@ -20,9 +18,6 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      #----------------------------------------------
-      #       check-out repo and set-up python
-      #----------------------------------------------
       - name: Check out repository
         uses: actions/checkout@v2
 
@@ -32,9 +27,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      #----------------------------------------------
-      #  -----  install & configure poetry  -----
-      #----------------------------------------------
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
@@ -42,15 +34,16 @@ jobs:
           virtualenvs-in-project: false
           installer-parallel: true
 
-      #----------------------------------------------
-      # install dependencies if cache does not exist
-      #----------------------------------------------
       - name: Install dependencies
         run: poetry install --no-root
 
-      #----------------------------------------------
-      #              run test suite
-      #----------------------------------------------
-      - name: Run tests
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Run pytest
         run: |
           poetry run pytest
