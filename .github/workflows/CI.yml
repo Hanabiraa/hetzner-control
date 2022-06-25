@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ "trunk" ]
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   linting:
@@ -29,7 +30,6 @@ jobs:
         python-version: [ "3.8.9", "3.9" ]
 
     runs-on: ${{ matrix.os }}
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
