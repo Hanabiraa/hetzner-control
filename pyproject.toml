@@ -18,6 +18,7 @@ htz = "hetzner_control.cli:main"
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.0"
 responses = "^0.20.0"
+flake8 = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
