@@ -44,6 +44,6 @@ class HetznerHandler:
             message = Text()
             message.append("API TOKEN not found!\n", style="bold red")
             message.append("Please add in terminal configuration file like .bashrc (.zshrc, etc) this:\n")
-            message.append(f"export HETZNER_API_TOKEN='your_api_token'", style="bold")
+            message.append("export HETZNER_API_TOKEN='your_api_token'", style="bold")
             raise ExMessageHandler(message, terminate_after=True)
         return token

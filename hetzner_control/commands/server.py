@@ -76,7 +76,7 @@ def get_server(
     table_base.add_column("Volumes", justify="center", style="")
     table_base.add_column("Status", justify="center", style=f"bold {'red' if data['status'] == 'off' else 'green'}")
 
-    table_net = Table(title=f"Network info", style="bold")
+    table_net = Table(title="Network info", style="bold")
     table_net.add_column("IPv4, MB", justify="center", style="bold cyan")
     table_net.add_column("IPv6", justify="center", style="bold cyan")
     table_net.add_column("Ingoing traffic, MB", justify="center", style="magenta")
@@ -190,11 +190,11 @@ def shut_down_server(
 
 
 @app.command("up", help="Power on server by ID")
-def shut_down_server(
+def start_up_server(
         id_server: int = typer.Argument(..., help="ID of the Server"),
 ) -> None:
     """
-    Making request to shut down server by ID.
+    Making request to start up server by ID.
 
     :param id_server: uniq server ID
     :return: None

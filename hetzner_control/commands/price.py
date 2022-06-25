@@ -112,9 +112,9 @@ def get_load_balancers_price() -> None:
     Printing load balancers types and price as Table in console
     """
     load_balance_price = Table(title="Load Balancers")
-    load_balance_price.add_column(f"id", justify="center", style="bold")
-    load_balance_price.add_column(f"Name", justify="center", style="")
-    load_balance_price.add_column(f"Location", justify="center", style="")
+    load_balance_price.add_column("id", justify="center", style="bold")
+    load_balance_price.add_column("Name", justify="center", style="")
+    load_balance_price.add_column("Location", justify="center", style="")
     load_balance_price.add_column(f"Hour, {_currency}\nWithout VAT", justify="center", style="bold green")
     load_balance_price.add_column(f"Hour, {_currency}\nWith VAT", justify="center", style="bold green")
     load_balance_price.add_column(f"Month, {_currency}\nWithout VAT", justify="center", style="bold green")
@@ -166,9 +166,9 @@ def get_server_types_price() -> None:
     Printing server configurations price as Table in console
     """
     server_types_price = Table(title="Server types")
-    server_types_price.add_column(f"id", justify="center", style="bold")
-    server_types_price.add_column(f"Name", justify="center", style="")
-    server_types_price.add_column(f"Location", justify="center", style="")
+    server_types_price.add_column("id", justify="center", style="bold")
+    server_types_price.add_column("Name", justify="center", style="")
+    server_types_price.add_column("Location", justify="center", style="")
     server_types_price.add_column(f"Hour, {_currency}\nWithout VAT", justify="center", style="bold green")
     server_types_price.add_column(f"Hour, {_currency}\nWith VAT", justify="center", style="bold green")
     server_types_price.add_column(f"Month, {_currency}\nWithout VAT", justify="center", style="bold green")
